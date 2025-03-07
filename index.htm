@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Paint Program</title>
     <style>
+        * {
+            user-select: none;
+        }
         body {
             margin: 0;
             overflow: hidden;
@@ -62,7 +65,7 @@
 </head>
 
 <body>
-    <canvas id="paintCanvas" width="800" height="600"></canvas>
+    <canvas id="paintCanvas" width="400" height="400"></canvas>
     <div class="tools">
         <button id="brushBtn" class="medaad"></button>
         <button id="eraseBtn" class="paakkon"></button>
@@ -75,20 +78,25 @@
         let isDrawing = false;
         let tool = 'brush'; // Default tool
 
-        // Set canvas size to fit the screen better
-        //canvas.width = window.innerWidth * 0.9;
-        canvas.width = window.innerWidth;
-        //canvas.height = window.innerHeight * 0.8;
-        canvas.height = window.innerHeight;
-
         let btn_width_height = (window.innerHeight / 7)+"px";
-        //document.getElementsByTagName("button").style.width = (window.innerHeight / 10)+"px";
-        document.getElementById("eraseBtn").style.width = btn_width_height;
-        document.getElementById("eraseBtn").style.height = btn_width_height;
-        document.getElementById("brushBtn").style.width = btn_width_height;
-        document.getElementById("brushBtn").style.height = btn_width_height;
-        document.getElementById("newPageBtn").style.width = btn_width_height;
-        document.getElementById("newPageBtn").style.height = btn_width_height;
+
+        function set_canvas_size(){
+            // Set canvas size to fit the screen better
+            //canvas.width = window.innerWidth * 0.9;
+            //canvas.height = window.innerHeight * 0.8;
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            btn_width_height = (window.innerHeight / 7)+"px";
+            //document.getElementsByTagName("button").style.width = (window.innerHeight / 10)+"px";
+            document.getElementById("eraseBtn").style.width = btn_width_height;
+            document.getElementById("eraseBtn").style.height = btn_width_height;
+            document.getElementById("brushBtn").style.width = btn_width_height;
+            document.getElementById("brushBtn").style.height = btn_width_height;
+            document.getElementById("newPageBtn").style.width = btn_width_height;
+            document.getElementById("newPageBtn").style.height = btn_width_height;
+        }
+        set_canvas_size();
 
         // Event listeners for mouse and touch
         canvas.addEventListener('mousedown', startDrawing);
@@ -99,6 +107,8 @@
         canvas.addEventListener('touchstart', startDrawing);
         canvas.addEventListener('touchmove', draw);
         canvas.addEventListener('touchend', stopDrawing);
+
+        window.addEventListener('resize', set_canvas_size);
 
         // Tool buttons
         document.getElementById('brushBtn').addEventListener('click', () => { 
